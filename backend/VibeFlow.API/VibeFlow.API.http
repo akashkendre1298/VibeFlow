@@ -1,0 +1,6 @@
+@VibeFlow.API_HostAddress = http://localhost:5296
+
+GET {{VibeFlow.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

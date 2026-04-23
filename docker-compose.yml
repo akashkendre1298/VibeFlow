@@ -1,0 +1,26 @@
+services:
+  backend:
+    build:
+      context: ./backend/VibeFlow.API
+      dockerfile: Dockerfile
+    container_name: vibeflow-backend
+    volumes:
+      - backend-data:/app/data
+    environment:
+      - ConnectionStrings__DefaultConnection=Data Source=/app/data/vibeflow.db
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vibeflow-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: always
+
+volumes:
+  backend-data:
+
