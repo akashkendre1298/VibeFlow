@@ -16,5 +16,8 @@ public class AssignmentHistory
     public int ChangedById { get; set; }
     public User? ChangedBy { get; set; }
 
+    public DateTime? OldDueDate { get; set; }
+    public DateTime? NewDueDate { get; set; }
+
     public DateTime ChangedAt { get; set; } = DateTime.UtcNow;
 }

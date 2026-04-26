@@ -15,12 +15,16 @@ builder.Services.AddControllers()
     });
 
 builder.Services.AddDbContext<VibeFlowDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Dependency Injection
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<IReportService, ReportService>();
+
+// Exception Handling
+builder.Services.AddExceptionHandler<VibeFlow.API.Middlewares.GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 // JWT Authentication
 var jwtKey = builder.Configuration["Jwt:Key"] ?? "VERY_LONG_AND_SECURE_SECRET_KEY_FOR_JWT";
@@ -49,11 +53,13 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+app.UseExceptionHandler();
+
 // Auto-migrate/create database
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<VibeFlowDbContext>();
-    db.Database.EnsureCreated();
+    db.Database.Migrate();
 }
 
 // Configure the HTTP request pipeline.
@@ -71,3 +77,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

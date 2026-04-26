@@ -1,30 +1,30 @@
 :root {
-  /* Brand Colors from Stitch VibeFlow */
-  --surface: #091422;
-  --surface-dim: #091422;
-  --surface-bright: #2f3a49;
-  --surface-container-lowest: #040f1c;
-  --surface-container-low: #111c2a;
-  --surface-container: #15202e;
-  --surface-container-high: #202b39;
-  --surface-container-highest: #2b3545;
-  --on-surface: #d8e3f7;
-  --on-surface-variant: #c1c6d4;
-  --primary: #a8c8ff;
-  --on-primary: #003062;
-  --primary-container: #579dff;
-  --on-primary-container: #003468;
-  --secondary: #c3c7cc;
-  --on-secondary: #2d3135;
-  --secondary-container: #43474c;
-  --on-secondary-container: #b2b5ba;
-  --tertiary: #b0c6ff;
-  --on-tertiary: #002d6e;
-  --tertiary-container: #6c9aff;
-  --on-tertiary-container: #003075;
-  --error: #ffb4ab;
-  --outline: #8b919e;
-  --outline-variant: #414752;
+  /* Premium Obsidian & Gold Theme */
+  --surface: #0f0f11;
+  --surface-dim: #0a0a0c;
+  --surface-bright: #27272a;
+  --surface-container-lowest: #050505;
+  --surface-container-low: #131316;
+  --surface-container: #18181b;
+  --surface-container-high: #242429;
+  --surface-container-highest: #303036;
+  --on-surface: #ededf0;
+  --on-surface-variant: #9999a1;
+  --primary: #dcb360;
+  --on-primary: #1a1506;
+  --primary-container: #b48a37;
+  --on-primary-container: #ffffff;
+  --secondary: #e4e4e7;
+  --on-secondary: #000000;
+  --secondary-container: #3f3f46;
+  --on-secondary-container: #f4f4f5;
+  --tertiary: #c0c0c0;
+  --on-tertiary: #111111;
+  --tertiary-container: #555555;
+  --on-tertiary-container: #dddddd;
+  --error: #ff6b6b;
+  --outline: #52525b;
+  --outline-variant: #2c2c30;
 
   /* Layout Spacing */
   --sidebar-width: 240px;
@@ -115,18 +115,20 @@ button {
   border: none;
   font-family: inherit;
   font-weight: 600;
-  transition: all 0.2s;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 button.primary {
-  background-color: var(--primary-container);
+  background-color: var(--primary);
   color: var(--on-primary);
   padding: 10px 20px;
+  box-shadow: 0 4px 14px rgba(220, 179, 96, 0.15);
 }
 
 button.primary:hover {
-  background-color: var(--primary);
-  box-shadow: 0 0 10px var(--primary);
+  background-color: #fce2a1;
+  box-shadow: 0 6px 20px rgba(220, 179, 96, 0.3);
+  transform: translateY(-1px);
 }
 
 /* App Layout */
@@ -408,13 +410,13 @@ button.primary:hover {
   font-size: 10px;
 }
 
-.badge-blue { background: rgba(87, 157, 255, 0.15); color: var(--primary); }
-.badge-green { background: rgba(0, 102, 68, 0.15); color: #00ffaa; }
+.badge-blue { background: rgba(220, 179, 96, 0.15); color: var(--primary); }
+.badge-green { background: rgba(160, 200, 160, 0.15); color: #a4d4a4; }
 
 /* Modal */
 .modal-overlay {
-  background: rgba(4, 15, 28, 0.8);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
 }
 
 .modal-content {

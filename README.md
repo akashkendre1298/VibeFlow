@@ -3,7 +3,8 @@
 VibeFlow is a high-performance, full-stack project management platform designed for teams who need clarity and speed. Featuring a dynamic Kanban board, real-time team insights, and granular time tracking, VibeFlow streamlines the transition from "Backlog" to "Done."
 
 ![VibeFlow Banner](https://img.shields.io/badge/VibeFlow-Project%20Management-blue?style=for-the-badge)
-![Tech Stack](https://img.shields.io/badge/.NET%2010-React%2018-Vite-green?style=for-the-badge)
+![Tech Stack](https://img.shields.io/badge/.NET%208-React%2018-Vite-green?style=for-the-badge)
+![Database](https://img.shields.io/badge/PostgreSQL-15-blue?style=for-the-badge)
 
 ---
 
@@ -16,7 +17,7 @@ VibeFlow is a high-performance, full-stack project management platform designed 
 
 ### 👥 Team Collaboration
 - **Member Directory**: View all project contributors and their roles.
-- **Assignment Tracking**: Transparent task ownership and historical assignment tracking.
+- **Assignment Tracking**: Transparent task ownership and historical assignment/due-date timeline tracking.
 
 ### 📊 Advanced Analytics & Reports
 - **Time Tracking**: Log hours spent on specific tasks with detailed descriptions.
@@ -27,92 +28,103 @@ VibeFlow is a high-performance, full-stack project management platform designed 
 
 ## 🛠 Tech Stack
 
-- **Frontend**: React 18, Vite, Lucide Icons, Vanilla CSS (Stitch Design System).
-- **Backend**: C# .NET 10 Web API, Entity Framework Core.
-- **Database**: SQLite (Production-ready file-based storage).
+- **Frontend**: React 18, Vite, Lucide Icons, Vanilla CSS (Premium Obsidian Theme).
+- **Backend**: C# .NET 8 Web API, Entity Framework Core.
+- **Database**: PostgreSQL (Containerized for local deployment and robust for production).
 - **Authentication**: JWT (JSON Web Tokens) with Secure Password Hashing (BCrypt).
-- **Testing**: xUnit, FluentAssertions (Backend) | Vitest, React Testing Library (Frontend).
+- **Testing**: xUnit, FluentAssertions (Backend) | Vitest, React Testing Library + Mock Service Worker (Frontend Integration).
 
 ---
 
-## 📦 Getting Started (Docker) - Recommended
+## 📦 Option 1: Full Docker Deployment (Easiest)
 
-VibeFlow is fully containerized for easy deployment.
+VibeFlow is fully containerized for a zero-configuration deployment. This method spins up the Database, Backend API, and Frontend completely inside Docker.
 
 ### Prerequisites
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed.
 
-### Quick Start (Public Docker Images)
-If you don't want to build from source, you can pull the official images directly from Docker Hub:
-```powershell
-# Pull and run the latest version
-docker run -p 8080:8080 akashkendre/vibeflow-api:latest
-docker run -p 80:80 akashkendre/vibeflow-web:latest
-```
-
-### Build from Source
-1. Clone the repository.
-2. Run the following command in the project root:
+### Build & Run
+1. Clone the repository and navigate to the root directory.
+2. Run the following command:
    ```powershell
-   docker compose up --build
+   docker compose up --build -d
    ```
-
 3. Access the application:
-   - **Frontend**: [http://localhost](http://localhost)
+   - **Frontend UI**: [http://localhost](http://localhost)
    - **API Docs**: [http://localhost:5296/openapi/v1.json](http://localhost:5296/openapi/v1.json)
-
 
 ---
 
-## 💻 Local Development Setup
+## 💻 Option 2: Local Development Setup (Source Code)
 
-### Backend (.NET 10)
+If you intend to write code or modify the application locally, follow this guide to run the stack natively on your machine, while utilizing Docker solely for hosting the database engine.
+
+### Prerequisites
+- [Node.js](https://nodejs.org/en/) & NPM
+- [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (Required for the Database)
+
+### Step 1: Start the Database via Docker
+Before starting the backend, boot up the Postgres Engine locally matching production specifications:
+```powershell
+docker-compose up postgres -d
+```
+> [!NOTE] 
+> This spins up the database automatically exposed on `localhost:5432`. No manual PostgreSQL installation is required on your Windows/Mac host system.
+
+### Step 2: Run the Backend (.NET 8)
 1. Navigate to the API folder:
-   ```bash
+   ```powershell
    cd backend/VibeFlow.API
    ```
 2. Run the application:
-   ```bash
+   ```powershell
    dotnet run
    ```
-   *The API will start on `http://localhost:5296`.*
+   *The API will start on `http://localhost:5296`. EF Core will automatically migrate and structure your database schemas on boot.*
 
-### Frontend (Vite + React)
-1. Navigate to the frontend folder:
-   ```bash
+### Step 3: Run the Frontend (React + Vite)
+1. Open a new terminal and navigate to the frontend folder:
+   ```powershell
    cd frontend
    ```
 2. Install dependencies:
-   ```bash
+   ```powershell
    npm install
    ```
 3. Start the dev server:
-   ```bash
+   ```powershell
    npm run dev
    ```
    *The app will start on `http://localhost:5173`.*
 
 ---
 
-## 🧪 Testing
+## 🧪 Testing Suites
+
+VibeFlow ships with over 35 automated integration and unit test workflows built rigidly into the pipeline!
 
 ### Backend (xUnit)
-Covering Authentication, Task Logic, and Analytical Calculations.
-```bash
+Covering 17 workflows encompassing Authentication cryptography, Task Logic constraints, and Analytical Calculations.
+```powershell
 cd backend/VibeFlow.Tests
 dotnet test
 ```
 
-### Frontend (Vitest)
-Covering UI Component Rendering and Dashboard Math.
-```bash
+### Frontend (Vitest & React Testing Library)
+Covering 22 workflows via heavily simulated DOM instances modeling Drag and Drop trees, Task modal patching, route protections, and time logger behavior using `Mock Service Worker (MSW)`.
+```powershell
 cd frontend
+# Run the test validations
 npm run test
+
+# Render line-by-line coverage architecture maps
+npm run test:coverage
 ```
 
 ---
 
-## 📄 API Reference
+## 📄 Core API References
 
 | Endpoint | Method | Description |
 | :--- | :--- | :--- |

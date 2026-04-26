@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\user\\Desktop\\AI-Project\\backend\\VibeFlow.API\\VibeFlow.API.csproj": {}
+    "C:\\Users\\Mac\\Desktop\\VibeFlow\\backend\\VibeFlow.API\\VibeFlow.API.csproj": {}
   },
   "projects": {
-    "c:\\Users\\user\\Desktop\\AI-Project\\backend\\VibeFlow.API\\VibeFlow.API.csproj": {
+    "C:\\Users\\Mac\\Desktop\\VibeFlow\\backend\\VibeFlow.API\\VibeFlow.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\user\\Desktop\\AI-Project\\backend\\VibeFlow.API\\VibeFlow.API.csproj",
+        "projectUniqueName": "C:\\Users\\Mac\\Desktop\\VibeFlow\\backend\\VibeFlow.API\\VibeFlow.API.csproj",
         "projectName": "VibeFlow.API",
-        "projectPath": "c:\\Users\\user\\Desktop\\AI-Project\\backend\\VibeFlow.API\\VibeFlow.API.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\user\\Desktop\\AI-Project\\backend\\VibeFlow.API\\obj\\",
+        "projectPath": "C:\\Users\\Mac\\Desktop\\VibeFlow\\backend\\VibeFlow.API\\VibeFlow.API.csproj",
+        "packagesPath": "C:\\Users\\Mac\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Mac\\Desktop\\VibeFlow\\backend\\VibeFlow.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Mac\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -68,9 +68,9 @@
               "target": "Package",
               "version": "[10.0.7, )"
             },
-            "Microsoft.EntityFrameworkCore.Sqlite": {
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
-              "version": "[10.0.7, )"
+              "version": "[10.0.1, )"
             }
           },
           "imports": [

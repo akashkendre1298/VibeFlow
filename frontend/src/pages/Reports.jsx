@@ -204,6 +204,7 @@ const Reports = () => {
                     <th>Status</th>
                     <th>Assignee</th>
                     <th>Hours Logged</th>
+                    <th>Due Date</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -218,6 +219,7 @@ const Reports = () => {
                       </td>
                       <td>{t.assigneeName}</td>
                       <td style={{ fontWeight: 700, color: 'var(--secondary)' }}>{t.totalHours}h</td>
+                      <td style={{ color: 'var(--on-surface-variant)' }}>{t.latestDueDate ? t.latestDueDate.split('T')[0] : 'N/A'}</td>
                     </tr>
                   ))}
                 </tbody>

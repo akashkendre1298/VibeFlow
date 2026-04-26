@@ -111,7 +111,35 @@ const TaskModal = ({ task, onClose, onUpdate }) => {
               <div style={{ fontSize: '13px', background: 'var(--surface-container-low)', borderRadius: 'var(--radius-md)', border: '1px solid var(--outline-variant)', padding: '0 16px', marginBottom: '32px' }}>
                 {history.length > 0 ? history.map(h => (
                   <div key={h.id} style={{ padding: '12px 0', borderBottom: '1px solid var(--outline-variant)' }}>
-                    <span style={{ color: 'var(--on-surface-variant)' }}>{h.changedBy?.name}</span> changed assignee from <strong style={{ color: 'var(--primary)' }}>{h.oldAssignee?.name || "Unassigned"}</strong> to <strong style={{ color: 'var(--primary)' }}>{h.newAssignee?.name || "Unassigned"}</strong>
+                    {h.oldDueDate || h.newDueDate ? (
+                      !h.oldDueDate ? (
+                        <>
+                          <span style={{ color: 'var(--on-surface-variant)' }}>{h.changedBy?.name}</span> changed due date to <strong style={{ color: 'var(--primary)' }}>{h.newDueDate.split('T')[0]}</strong>
+                        </>
+                      ) : !h.newDueDate ? (
+                        <>
+                          <span style={{ color: 'var(--on-surface-variant)' }}>{h.changedBy?.name}</span> removed due date (previously <strong style={{ color: 'var(--primary)' }}>{h.oldDueDate.split('T')[0]}</strong>)
+                        </>
+                      ) : (
+                        <>
+                          <span style={{ color: 'var(--on-surface-variant)' }}>{h.changedBy?.name}</span> changed due date from <strong style={{ color: 'var(--primary)' }}>{h.oldDueDate.split('T')[0]}</strong> to <strong style={{ color: 'var(--primary)' }}>{h.newDueDate.split('T')[0]}</strong>
+                        </>
+                      )
+                    ) : (
+                      !h.oldAssignee ? (
+                        <>
+                          <span style={{ color: 'var(--on-surface-variant)' }}>{h.changedBy?.name}</span> assigned to <strong style={{ color: 'var(--primary)' }}>{h.newAssignee?.name}</strong>
+                        </>
+                      ) : !h.newAssignee ? (
+                        <>
+                          <span style={{ color: 'var(--on-surface-variant)' }}>{h.changedBy?.name}</span> unassigned (previously <strong style={{ color: 'var(--primary)' }}>{h.oldAssignee?.name}</strong>)
+                        </>
+                      ) : (
+                        <>
+                          <span style={{ color: 'var(--on-surface-variant)' }}>{h.changedBy?.name}</span> changed assignee from <strong style={{ color: 'var(--primary)' }}>{h.oldAssignee?.name}</strong> to <strong style={{ color: 'var(--primary)' }}>{h.newAssignee?.name}</strong>
+                        </>
+                      )
+                    )}
                     <div style={{ fontSize: '11px', color: 'var(--on-surface-variant)', marginTop: '4px' }}>
                       {new Date(h.changedAt.endsWith('Z') ? h.changedAt : h.changedAt + 'Z').toLocaleString('en-IN')}
                     </div>
@@ -235,7 +263,7 @@ const TaskModal = ({ task, onClose, onUpdate }) => {
               <label style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--on-surface-variant)', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Due Date</label>
               <input 
                 type="date" 
-                defaultValue={task.dueDate ? new Date(task.dueDate).toISOString().split('T')[0] : ''}
+                defaultValue={task.dueDate ? task.dueDate.split('T')[0] : ''}
                 onChange={e => handleDueDateChange(e.target.value)}
                 style={{ 
                   width: '100%', 

@@ -25,6 +25,7 @@ public class TaskReportDto
     public string Status { get; set; } = string.Empty;
     public string AssigneeName { get; set; } = string.Empty;
     public decimal TotalHours { get; set; }
+    public DateTime? LatestDueDate { get; set; }
 }
 
 public class UserReportDto
