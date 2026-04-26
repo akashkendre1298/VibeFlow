@@ -50,10 +50,3 @@ Based on the recent Peer Review Report, here are the actionable items and weakne
 
 ---
 
-## 🚀 Suggested 3-Sprint Path to Production
-
-To tackle these sequentially without overwhelming the team, the reviewer suggested the following path:
-
-* **Week 1:** Add frontend integration tests and fix the database mismatch (SQLite -> PostgreSQL).
-* **Week 2:** Implement robust API integration tests and standardize the global error handling format.
-* **Week 3:** Set up the CI/CD pipeline and conduct a final security audit.
