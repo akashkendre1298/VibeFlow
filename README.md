@@ -61,7 +61,7 @@ If you intend to write code or modify the application locally, follow this guide
 
 ### Prerequisites
 - [Node.js](https://nodejs.org/en/) & NPM
-- [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+- [.NET 10 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/10)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) (Required for the Database)
 
 ### Step 1: Start the Database via Docker
