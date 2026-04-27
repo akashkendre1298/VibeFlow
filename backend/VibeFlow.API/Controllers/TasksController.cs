@@ -37,7 +37,7 @@ public class TasksController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateTask([FromBody] CreateTaskRequest request)
     {
-        if (request.Title.Length > 255) return Problem(detail: "Title too long", statusCode: StatusCodes.Status400BadRequest, title: "Bad Request");
+        if (request.Title.Length > 255) return BadRequest(new { message = "Title too long" });
         
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         var task = await _taskService.CreateTaskAsync(request.Title, userId, request.Status, request.Description ?? "", request.Priority, request.AssigneeId, request.DueDate);

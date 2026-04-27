@@ -142,7 +142,8 @@ const Board = () => {
       setTasks(prev => [res.data, ...prev]);
       toast.success('Task created successfully');
     } catch (err) {
-      toast.error(err.response?.data || "Failed to add task");
+      const errorMsg = err.response?.data?.message || err.response?.data || "Failed to add task";
+      toast.error(errorMsg);
     }
   }, []);
 

@@ -65,7 +65,7 @@ describe('Integration Tests - Edge Cases & UI Integrity', () => {
     
     await user.click(registerBtn);
 
-    expect(await screen.findByText(/Email already exists/i)).toBeInTheDocument();
+    expect((await screen.findAllByText(/Email already exists/i))[0]).toBeInTheDocument();
   });
 
   it('2. Route Protection - Redirects unauthenticated users to login', async () => {
@@ -91,10 +91,6 @@ describe('Integration Tests - Edge Cases & UI Integrity', () => {
         return HttpResponse.json('Server Capacity Exhausted', { status: 500 });
       })
     );
-    
-    // For JS alerts, we spy on window.alert
-    const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {});
-
     window.history.pushState({}, 'Dashboard', '/');
     render(<App />);
     
@@ -108,10 +104,8 @@ describe('Integration Tests - Edge Cases & UI Integrity', () => {
     await user.click(screen.getByRole('button', { name: /Create/i }));
 
     await waitFor(() => {
-      expect(alertMock).toHaveBeenCalledWith('Server Capacity Exhausted');
+      expect(screen.getByText('Server Capacity Exhausted')).toBeInTheDocument();
     });
-    
-    alertMock.mockRestore();
   });
 
   it('4. Frontend Filtering - Search Contextualization', async () => {
