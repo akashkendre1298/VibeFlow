@@ -219,7 +219,7 @@ const Reports = () => {
                       </td>
                       <td>{t.assigneeName}</td>
                       <td style={{ fontWeight: 700, color: 'var(--secondary)' }}>{t.totalHours}h</td>
-                      <td style={{ color: 'var(--on-surface-variant)' }}>{t.latestDueDate ? t.latestDueDate.split('T')[0] : 'N/A'}</td>
+                      <td style={{ color: 'var(--on-surface-variant)' }}>{t.latestDueDate ? new Date(t.latestDueDate).toLocaleDateString('en-GB') : 'N/A'}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -258,7 +258,7 @@ const Reports = () => {
                     return matchesSearch && matchesAssignee;
                   }).map(log => (
                     <tr key={log.id}>
-                      <td>{new Date(log.loggedAt).toLocaleDateString('en-IN')}</td>
+                      <td>{new Date(log.loggedAt).toLocaleDateString('en-GB')}</td>
                       <td style={{ fontWeight: 500 }}>{log.userName}</td>
                       <td>{log.taskTitle}</td>
                       <td style={{ fontWeight: 700, color: 'var(--primary)' }}>{log.hours}h</td>

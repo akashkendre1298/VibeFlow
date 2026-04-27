@@ -64,7 +64,7 @@ const TaskCard = ({ task, onClick, isOverlay }) => {
               color: new Date(task.dueDate) < new Date() ? '#f5222d' : 'var(--on-surface-variant)'
             }}>
               <Calendar size={12} />
-              <span>Due: {task.dueDate.split('T')[0]}</span>
+              <span>Due: {new Date(task.dueDate).toLocaleDateString('en-GB')}</span>
             </div>
           )}
         </div>

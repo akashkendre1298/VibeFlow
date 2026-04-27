@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { toast } from 'sonner';
 import Navbar from '../components/Navbar';
 import Column from '../components/Column';
 import api from '../services/api';
@@ -139,8 +140,9 @@ const Board = () => {
     try {
       const res = await api.post('/tasks', taskData);
       setTasks(prev => [res.data, ...prev]);
+      toast.success('Task created successfully');
     } catch (err) {
-      alert(err.response?.data || "Failed to add task");
+      toast.error(err.response?.data || "Failed to add task");
     }
   }, []);
 

@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import api from '../services/api';
 import { useNavigate, Link } from 'react-router-dom';
+import { toast } from 'sonner';
+import { Eye, EyeOff } from 'lucide-react';
 
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -13,9 +16,12 @@ const Register = () => {
     e.preventDefault();
     try {
       await api.post('/auth/register', { email, password, name });
+      toast.success('Registration successful! Please login.');
       navigate('/login');
     } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed');
+      const msg = err.response?.data?.message || 'Registration failed';
+      setError(msg);
+      toast.error(msg);
     }
   };
 
@@ -28,7 +34,23 @@ const Register = () => {
         <form onSubmit={handleSubmit}>
           <input type="text" placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)} required />
           <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-          <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+          <div className="password-input-wrapper">
+            <input 
+              type={showPassword ? "text" : "password"} 
+              placeholder="Password" 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
+              required 
+            />
+            <button 
+              type="button" 
+              className="password-toggle-icon" 
+              onClick={() => setShowPassword(!showPassword)}
+              tabIndex="-1"
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
           <button type="submit" className="primary" style={{ width: '100%', marginTop: '10px' }}>Sign Up</button>
         </form>
         <p style={{ textAlign: 'center', marginTop: '20px' }}>

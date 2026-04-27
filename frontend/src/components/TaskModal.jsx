@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import { X, User as UserIcon, History } from 'lucide-react';
+import { toast } from 'sonner';
 
 const TaskModal = ({ task, onClose, onUpdate }) => {
   const [users, setUsers] = useState([]);
@@ -8,6 +9,11 @@ const TaskModal = ({ task, onClose, onUpdate }) => {
   const [workLogs, setWorkLogs] = useState([]);
   const [logHours, setLogHours] = useState('');
   const [logDesc, setLogDesc] = useState('');
+  
+  const formatDate = (dateString) => {
+    if (!dateString) return 'Not set';
+    return new Date(dateString).toLocaleDateString('en-GB');
+  };
 
   const fetchData = async () => {
     const [uRes, hRes, wRes] = await Promise.all([
@@ -27,41 +33,71 @@ const TaskModal = ({ task, onClose, onUpdate }) => {
   const handleLogWork = async (e) => {
     e.preventDefault();
     if (!logHours) return;
-    await api.post(`/tasks/${task.id}/worklogs`, { 
-      hours: parseFloat(logHours), 
-      description: logDesc 
-    });
-    setLogHours('');
-    setLogDesc('');
-    fetchData();
+    try {
+      await api.post(`/tasks/${task.id}/worklogs`, { 
+        hours: parseFloat(logHours), 
+        description: logDesc 
+      });
+      setLogHours('');
+      setLogDesc('');
+      toast.success('Work logged successfully');
+      fetchData();
+    } catch (err) {
+      toast.error('Failed to log work');
+    }
   };
 
   const handleAssigneeChange = async (userId) => {
-    await api.patch(`/tasks/${task.id}`, { 
-      assigneeId: userId === "null" ? null : parseInt(userId),
-      clearAssignee: userId === "null"
-    });
-    onUpdate();
+    try {
+      await api.patch(`/tasks/${task.id}`, { 
+        assigneeId: userId === "null" ? null : parseInt(userId),
+        clearAssignee: userId === "null"
+      });
+      toast.success('Assignee updated');
+      onUpdate();
+    } catch (err) {
+      toast.error('Failed to update assignee');
+    }
   };
 
   const handlePriorityChange = async (val) => {
-    await api.patch(`/tasks/${task.id}`, { priority: parseInt(val) });
-    onUpdate();
+    try {
+      await api.patch(`/tasks/${task.id}`, { priority: parseInt(val) });
+      toast.success('Priority updated');
+      onUpdate();
+    } catch (err) {
+      toast.error('Failed to update priority');
+    }
   };
 
   const handleStatusChange = async (val) => {
-    await api.patch(`/tasks/${task.id}`, { status: parseInt(val) });
-    onUpdate();
+    try {
+      await api.patch(`/tasks/${task.id}`, { status: parseInt(val) });
+      toast.success('Status updated');
+      onUpdate();
+    } catch (err) {
+      toast.error('Failed to update status');
+    }
   };
 
   const handleDescriptionUpdate = async (val) => {
-    await api.patch(`/tasks/${task.id}`, { description: val });
-    onUpdate();
+    try {
+      await api.patch(`/tasks/${task.id}`, { description: val });
+      toast.success('Description updated');
+      onUpdate();
+    } catch (err) {
+      toast.error('Failed to update description');
+    }
   };
 
   const handleDueDateChange = async (val) => {
-    await api.patch(`/tasks/${task.id}`, { dueDate: val || null });
-    onUpdate();
+    try {
+      await api.patch(`/tasks/${task.id}`, { dueDate: val || null });
+      toast.success('Due date updated');
+      onUpdate();
+    } catch (err) {
+      toast.error('Failed to update due date');
+    }
   };
 
   return (
@@ -114,15 +150,15 @@ const TaskModal = ({ task, onClose, onUpdate }) => {
                     {h.oldDueDate || h.newDueDate ? (
                       !h.oldDueDate ? (
                         <>
-                          <span style={{ color: 'var(--on-surface-variant)' }}>{h.changedBy?.name}</span> changed due date to <strong style={{ color: 'var(--primary)' }}>{h.newDueDate.split('T')[0]}</strong>
+                          <span style={{ color: 'var(--on-surface-variant)' }}>{h.changedBy?.name}</span> changed due date to <strong style={{ color: 'var(--primary)' }}>{formatDate(h.newDueDate)}</strong>
                         </>
                       ) : !h.newDueDate ? (
                         <>
-                          <span style={{ color: 'var(--on-surface-variant)' }}>{h.changedBy?.name}</span> removed due date (previously <strong style={{ color: 'var(--primary)' }}>{h.oldDueDate.split('T')[0]}</strong>)
+                          <span style={{ color: 'var(--on-surface-variant)' }}>{h.changedBy?.name}</span> removed due date (previously <strong style={{ color: 'var(--primary)' }}>{formatDate(h.oldDueDate)}</strong>)
                         </>
                       ) : (
                         <>
-                          <span style={{ color: 'var(--on-surface-variant)' }}>{h.changedBy?.name}</span> changed due date from <strong style={{ color: 'var(--primary)' }}>{h.oldDueDate.split('T')[0]}</strong> to <strong style={{ color: 'var(--primary)' }}>{h.newDueDate.split('T')[0]}</strong>
+                          <span style={{ color: 'var(--on-surface-variant)' }}>{h.changedBy?.name}</span> changed due date from <strong style={{ color: 'var(--primary)' }}>{formatDate(h.oldDueDate)}</strong> to <strong style={{ color: 'var(--primary)' }}>{formatDate(h.newDueDate)}</strong>
                         </>
                       )
                     ) : (
@@ -262,8 +298,22 @@ const TaskModal = ({ task, onClose, onUpdate }) => {
             <div style={{ background: 'var(--surface-container-high)', padding: '16px', borderRadius: 'var(--radius-md)', border: '1px solid var(--outline-variant)' }}>
               <label style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--on-surface-variant)', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Due Date</label>
               <input 
-                type="date" 
-                defaultValue={task.dueDate ? task.dueDate.split('T')[0] : ''}
+                type="text" 
+                placeholder="dd/mm/yyyy"
+                defaultValue={task.dueDate ? formatDate(task.dueDate) : ''}
+                onFocus={(e) => {
+                  const val = e.target.value;
+                  e.target.type = 'date';
+                  if (val && val.includes('/')) {
+                    const [d, m, y] = val.split('/');
+                    e.target.value = `${y}-${m}-${d}`;
+                  }
+                }}
+                onBlur={(e) => {
+                  const val = e.target.value;
+                  e.target.type = 'text';
+                  if (val) e.target.value = formatDate(val);
+                }}
                 onChange={e => handleDueDateChange(e.target.value)}
                 style={{ 
                   width: '100%', 
@@ -272,7 +322,8 @@ const TaskModal = ({ task, onClose, onUpdate }) => {
                   color: 'var(--on-surface)', 
                   border: '1px solid var(--outline-variant)',
                   borderRadius: 'var(--radius-md)',
-                  fontSize: '14px'
+                  fontSize: '14px',
+                  colorScheme: 'dark'
                 }}
               />
             </div>

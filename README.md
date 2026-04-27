@@ -29,7 +29,7 @@ VibeFlow is a high-performance, full-stack project management platform designed 
 ## 🛠 Tech Stack
 
 - **Frontend**: React 18, Vite, Lucide Icons, Vanilla CSS (Premium Obsidian Theme).
-- **Backend**: C# .NET 8 Web API, Entity Framework Core.
+- **Backend**: C# .NET 10 Web API, Entity Framework Core.
 - **Database**: PostgreSQL (Containerized for local deployment and robust for production).
 - **Authentication**: JWT (JSON Web Tokens) with Secure Password Hashing (BCrypt).
 - **Testing**: xUnit, FluentAssertions (Backend) | Vitest, React Testing Library + Mock Service Worker (Frontend Integration).
