@@ -1,8 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { Toaster } from 'sonner';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import Auth from './pages/Auth';
 import Board from './pages/Board';
 import Team from './pages/Team';
 import Reports from './pages/Reports';
@@ -27,8 +26,8 @@ function App() {
       <Toaster position="top-center" richColors />
       <Router>
         <Routes>
-          <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-          <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+          <Route path="/login" element={<PublicRoute><Auth /></PublicRoute>} />
+          <Route path="/register" element={<PublicRoute><Auth /></PublicRoute>} />
           <Route path="/" element={<ProtectedRoute><Board /></ProtectedRoute>} />
           <Route path="/team" element={<ProtectedRoute><Team /></ProtectedRoute>} />
           <Route path="/reports/time" element={<ProtectedRoute><Reports /></ProtectedRoute>} />

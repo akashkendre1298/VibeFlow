@@ -76,10 +76,111 @@ body {
 /* Auth Layout */
 .auth-container {
   display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.auth-image-panel {
+  flex: 1;
+  display: none; /* hidden on mobile */
   justify-content: center;
   align-items: center;
-  height: 100vh;
   background-color: var(--surface-container-lowest);
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .auth-image-panel {
+    display: flex;
+  }
+}
+
+/* CSS 3D Scene */
+.floating-cards-scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.float-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+}
+
+/* Position and rotate each wrapper uniquely to build the 3D cluster */
+.wrap-1 { transform: translate3d(-200px, -240px, -50px) rotateX(15deg) rotateY(-25deg) rotateZ(-5deg) scale(0.9); }
+.wrap-2 { transform: translate3d(20px, -180px, 40px) rotateX(10deg) rotateY(-15deg) rotateZ(2deg) scale(1.1); }
+.wrap-3 { transform: translate3d(-120px, -60px, 120px) rotateX(5deg) rotateY(-20deg) rotateZ(-3deg) scale(1.2); }
+.wrap-4 { transform: translate3d(140px, -20px, -20px) rotateX(18deg) rotateY(-30deg) rotateZ(5deg) scale(0.95); }
+.wrap-5 { transform: translate3d(-220px, 80px, 20px) rotateX(12deg) rotateY(-18deg) rotateZ(-8deg) scale(0.85); }
+.wrap-6 { transform: translate3d(60px, 120px, 80px) rotateX(8deg) rotateY(-22deg) rotateZ(1deg) scale(1.15); }
+.wrap-7 { transform: translate3d(-80px, 220px, -40px) rotateX(25deg) rotateY(-35deg) rotateZ(-4deg) scale(0.9); }
+.wrap-8 { transform: translate3d(180px, 200px, -80px) rotateX(20deg) rotateY(-10deg) rotateZ(6deg) scale(0.8); }
+
+.floating-card {
+  width: 240px;
+  background: rgba(36, 36, 41, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(220, 179, 96, 0.2);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform-style: preserve-3d;
+  animation: floatCard 6s ease-in-out infinite alternate;
+  /* Adjust margin-left and margin-top to center the card on the wrapper's origin */
+  margin-left: -120px;
+  margin-top: -60px;
+}
+
+/* Stagger the animations so they float independently */
+.wrap-1 .floating-card { animation-delay: 0s; border-left: 3px solid #595959; }
+.wrap-2 .floating-card { animation-delay: -1.5s; border-left: 3px solid var(--primary); }
+.wrap-3 .floating-card { animation-delay: -3s; border-left: 3px solid #a4d4a4; }
+.wrap-4 .floating-card { animation-delay: -4.5s; border-left: 3px solid #a29bfe; }
+.wrap-5 .floating-card { animation-delay: -2s; border-left: 3px solid #ff9f43; }
+.wrap-6 .floating-card { animation-delay: -5s; border-left: 3px solid #38b27a; }
+.wrap-7 .floating-card { animation-delay: -1s; border-left: 3px solid #8c8c8c; }
+.wrap-8 .floating-card { animation-delay: -3.5s; border-left: 3px solid #f5222d; }
+
+@keyframes floatCard {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-30px); }
+}
+
+.floating-card .card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--on-surface);
+  margin: 12px 0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.floating-card .card-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.floating-card .avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+.auth-form-panel {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--surface-container-lowest);
+  z-index: 2;
 }
 
 .auth-card {
@@ -88,8 +189,43 @@ body {
   border-radius: var(--radius-lg);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   width: 100%;
-  max-width: 400px;
+  height: 100%;
   border: 1px solid var(--outline-variant);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Flip Animations */
+.flip-container {
+  perspective: 1200px;
+  width: 100%;
+  max-width: 400px;
+  height: 560px;
+}
+
+.flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.flip-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.flip-front, .flip-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.flip-back {
+  transform: rotateY(180deg);
 }
 
 input {
