@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitFor, cleanup } from '@testing-library/react';
+import { render, screen, waitFor, cleanup, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import { setupServer } from 'msw/node';
@@ -52,12 +52,13 @@ describe('Integration Tests - Edge Cases & UI Integrity', () => {
     window.history.pushState({}, 'Registration', '/register');
     render(<App />);
 
-    expect(await screen.findByRole('button', { name: /Sign Up/i })).toBeInTheDocument();
+    const registerBtn = await screen.findByRole('button', { name: /Sign Up/i });
+    expect(registerBtn).toBeInTheDocument();
 
-    const nameInput = screen.getByPlaceholderText(/Full Name/i);
-    const emailInput = screen.getByPlaceholderText(/Email/i);
-    const passInput = screen.getByPlaceholderText(/Password/i);
-    const registerBtn = screen.getByRole('button', { name: /Sign Up/i });
+    const form = registerBtn.closest('form');
+    const nameInput = within(form).getByPlaceholderText(/Full Name/i);
+    const emailInput = within(form).getByPlaceholderText(/Email/i);
+    const passInput = within(form).getByPlaceholderText(/Password/i);
 
     await user.type(nameInput, 'New User');
     await user.type(emailInput, 'existing@test.com');
@@ -77,7 +78,7 @@ describe('Integration Tests - Edge Cases & UI Integrity', () => {
     render(<App />);
 
     // Validate that it forced us to the Login page
-    expect(await screen.findByRole('heading', { name: /VibeFlow/i })).toBeInTheDocument();
+    expect((await screen.findAllByRole('heading', { name: /VibeFlow/i }))[0]).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Log In/i })).toBeInTheDocument();
   });
 

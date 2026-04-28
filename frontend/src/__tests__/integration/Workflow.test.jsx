@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitFor, cleanup, fireEvent } from '@testing-library/react';
+import { render, screen, waitFor, cleanup, fireEvent, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import { setupServer } from 'msw/node';
@@ -59,10 +59,13 @@ describe('Integration Tests - Core Workflows', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    expect(await screen.findByRole('button', { name: /Log In/i })).toBeInTheDocument();
-    await user.type(screen.getByPlaceholderText(/Email/i), 'test@test.com');
-    await user.type(screen.getByPlaceholderText(/Password/i), 'pass123');
-    await user.click(screen.getByRole('button', { name: /Log In/i }));
+    const loginBtn = await screen.findByRole('button', { name: /Log In/i });
+    expect(loginBtn).toBeInTheDocument();
+    
+    const form = loginBtn.closest('form');
+    await user.type(within(form).getByPlaceholderText(/Email/i), 'test@test.com');
+    await user.type(within(form).getByPlaceholderText(/Password/i), 'pass123');
+    await user.click(loginBtn);
 
     expect(await screen.findByText('Learn React')).toBeInTheDocument();
   });
