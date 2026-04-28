@@ -8,6 +8,7 @@ public interface ITaskService
 {
     Task<TaskItem> CreateTaskAsync(string title, int creatorId, VibeFlow.API.Models.TaskStatus status = VibeFlow.API.Models.TaskStatus.Backlog, string description = "", TaskPriority priority = TaskPriority.Medium, int? assigneeId = null, DateTime? dueDate = null);
     Task UpdateAssigneeAsync(int taskId, int? newAssigneeId, int changedById);
+    Task LogDueDateChangeAsync(int taskId, DateTime? oldDueDate, DateTime? newDueDate, int changedById);
     Task LogWorkAsync(int taskId, int userId, decimal hours, string description);
 }
 
@@ -30,7 +31,7 @@ public class TaskService : ITaskService
             Status = status,
             Priority = priority,
             AssigneeId = assigneeId,
-            DueDate = dueDate
+            DueDate = dueDate.HasValue ? DateTime.SpecifyKind(dueDate.Value, DateTimeKind.Utc) : null
         };
 
         _context.Tasks.Add(task);
@@ -69,6 +70,21 @@ public class TaskService : ITaskService
             TaskItemId = taskId,
             OldAssigneeId = oldAssigneeId,
             NewAssigneeId = newAssigneeId,
+            ChangedById = changedById,
+            ChangedAt = DateTime.UtcNow
+        };
+
+        _context.AssignmentHistories.Add(history);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task LogDueDateChangeAsync(int taskId, DateTime? oldDueDate, DateTime? newDueDate, int changedById)
+    {
+        var history = new AssignmentHistory
+        {
+            TaskItemId = taskId,
+            OldDueDate = oldDueDate,
+            NewDueDate = newDueDate,
             ChangedById = changedById,
             ChangedAt = DateTime.UtcNow
         };

@@ -1,0 +1,46 @@
+<mxfile host="65bd71144e">
+    <diagram id="vibeflow_detailed" name="Detailed Stack Architecture">
+        <mxGraphModel dx="1626" dy="1740" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="850" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="docker_bg" value="Docker Compose Orchestration" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;dashed=1;verticalAlign=top;fontStyle=1;fontSize=18;fontColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="80" width="1020" height="420" as="geometry"/>
+                </mxCell>
+                <mxCell id="vite_server" value="Vite Dev Server" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#000000;fontSize=14;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="150" y="140" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="frontend" value="1. React 18 UI&#10;(Kanban &amp; Reports)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#000000;fontSize=16;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="320" y="150" width="180" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="backend" value="2. .NET 8 Web API&#10;(Controllers &amp; Auth)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#000000;fontSize=16;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="640" y="150" width="180" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="database" value="3. PostgreSQL 15&#10;(Docker Engine)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#000000;fontSize=16;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="940" y="135" width="130" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="test_front" value="Testing: Vitest &amp; RTL&#10;(Mock Service Worker)" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#000000;fontSize=14;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="320" y="380" width="180" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="test_back" value="Testing: xUnit Core&#10;(Fluent Assertions)" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#000000;fontSize=14;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="640" y="380" width="180" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="flow_server_react" value="Serve UI" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#000000;fontColor=#FFFFFF;fontSize=14;strokeWidth=2;" parent="1" source="vite_server" target="frontend" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="flow_http" value="HTTP POST/GET&#10;(JWT Bearer Token)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#000000;fontColor=#FFFFFF;fontSize=14;strokeWidth=3;" parent="1" source="frontend" target="backend" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="flow_ef" value="EF Core 8.0&#10;(Npgsql Connection)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#000000;fontColor=#FFFFFF;fontSize=14;strokeWidth=3;" parent="1" source="backend" target="database" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="flow_test1" value="Component Mocking" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=0.5;exitY=0;entryX=0.5;entryY=1;strokeColor=#000000;fontColor=#FFFFFF;fontSize=13;strokeWidth=2;dashed=1;" parent="1" source="test_front" target="frontend" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="flow_test2" value="Integration Asserts" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=0.5;exitY=0;entryX=0.5;entryY=1;strokeColor=#000000;fontColor=#FFFFFF;fontSize=13;strokeWidth=2;dashed=1;" parent="1" source="test_back" target="backend" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

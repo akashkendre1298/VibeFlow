@@ -1,13 +1,26 @@
 services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: vibeflow-postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=vibeflow_dev_pass
+      - POSTGRES_DB=vibeflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    restart: always
+
   backend:
     build:
       context: ./backend/VibeFlow.API
       dockerfile: Dockerfile
     container_name: vibeflow-backend
-    volumes:
-      - backend-data:/app/data
     environment:
-      - ConnectionStrings__DefaultConnection=Data Source=/app/data/vibeflow.db
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=vibeflow;Username=postgres;Password=vibeflow_dev_pass
+    depends_on:
+      - postgres
     restart: always
 
   frontend:
@@ -22,5 +35,5 @@ services:
     restart: always
 
 volumes:
-  backend-data:
+  pg-data:
 

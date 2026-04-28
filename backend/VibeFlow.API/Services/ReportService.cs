@@ -31,6 +31,7 @@ public class ReportService : IReportService
             Title = t.Title,
             Status = t.Status.ToString(),
             AssigneeName = t.Assignee?.Name ?? "Unassigned",
+            LatestDueDate = t.DueDate,
             TotalHours = t.WorkLogs.Sum(w => w.Hours)
         }).ToList();
 

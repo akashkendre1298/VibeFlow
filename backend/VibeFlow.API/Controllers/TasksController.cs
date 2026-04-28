@@ -37,7 +37,7 @@ public class TasksController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateTask([FromBody] CreateTaskRequest request)
     {
-        if (request.Title.Length > 255) return BadRequest("Title too long");
+        if (request.Title.Length > 255) return BadRequest(new { message = "Title too long" });
         
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         var task = await _taskService.CreateTaskAsync(request.Title, userId, request.Status, request.Description ?? "", request.Priority, request.AssigneeId, request.DueDate);
@@ -63,7 +63,15 @@ public class TasksController : ControllerBase
         if (request.Status.HasValue) task.Status = request.Status.Value;
         if (request.Priority.HasValue) task.Priority = request.Priority.Value;
         if (request.Description != null) task.Description = request.Description;
-        if (request.DueDate.HasValue) task.DueDate = request.DueDate.Value;
+        if (request.DueDate.HasValue) 
+        {
+            var newDueDate = DateTime.SpecifyKind(request.DueDate.Value, DateTimeKind.Utc);
+            if (task.DueDate != newDueDate)
+            {
+                await _taskService.LogDueDateChangeAsync(id, task.DueDate, newDueDate, userId);
+                task.DueDate = newDueDate;
+            }
+        }
         if (request.Title != null) task.Title = request.Title;
 
         if (request.AssigneeId.HasValue || request.ClearAssignee == true)

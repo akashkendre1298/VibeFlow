@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using VibeFlow.API.Data;
@@ -11,9 +12,11 @@ using VibeFlow.API.Data;
 namespace VibeFlow.API.Migrations
 {
     [DbContext(typeof(VibeFlowDbContext))]
-    partial class VibeFlowDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260426185257_InitialPostgresCreate")]
+    partial class InitialPostgresCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,14 +42,8 @@ namespace VibeFlow.API.Migrations
                     b.Property<int?>("NewAssigneeId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime?>("NewDueDate")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<int?>("OldAssigneeId")
                         .HasColumnType("integer");
-
-                    b.Property<DateTime?>("OldDueDate")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("TaskItemId")
                         .HasColumnType("integer");

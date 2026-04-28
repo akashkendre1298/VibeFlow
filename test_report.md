@@ -27,7 +27,7 @@ These tests verify business logic, security, and data integrity at the API and S
 | **Reports**| BT-16 | `Report_GrandTotal` | Accurate project-wide hour calculation | ✅ PASS |
 | **System** | BT-17 | `TaskService_Robustness` | Service-layer error handling & bootstrap | ✅ PASS |
 
-### 🌐 Frontend Tests (Vitest & Manual - 12 Cases)
+### 🌐 Frontend Tests (Vitest & Manual - 22 Cases)
 These tests verify the UI/UX experience and client-side logic.
 
 | Category | ID | Description | Type | Result |
@@ -44,6 +44,16 @@ These tests verify the UI/UX experience and client-side logic.
 | **Time** | FT-10 | "Log Work" form submission & refresh | Positive | ✅ PASSED |
 | **Reports**| FT-11 | Analytical Dashboards (Math Accuracy) | Logic | ✅ PASSED |
 | **System** | FT-12 | Column ID collision prevention | Edge | ✅ PASSED |
+| **Auth** | FT-13 | Automated Login Redirection Core Workflow | Integration | ✅ PASSED |
+| **Tasks** | FT-14 | React Hook Form E2E Task Creation via Mock API | Integration | ✅ PASSED |
+| **Tasks** | FT-15 | Automated Task Modal Assignment Sync | Integration | ✅ PASSED |
+| **Time** | FT-16 | React Testing Library E2E Time Logger Validation | Integration | ✅ PASSED |
+| **Board** | FT-17 | RTL Kanban Board/DndContext Render Validations | Integration | ✅ PASSED |
+| **Auth** | FT-18 | Registration Validation (400 Backend Rejections) | Edge | ✅ PASSED |
+| **Routing** | FT-19 | Protected Route Rejection on invalid Token | Edge | ✅ PASSED |
+| **Error** | FT-20 | Graceful Degradation on 500 Task Creation | Edge | ✅ PASSED |
+| **Filter** | FT-21 | Text Search contextualization accuracy | Edge | ✅ PASSED |
+| **Filter** | FT-22 | Assignee selection dynamic filtering | Edge | ✅ PASSED |
 
 ## 🏁 KPI Final Sign-off
 
@@ -55,7 +65,7 @@ These tests verify the UI/UX experience and client-side logic.
 
 ## 📊 Summary
 - **Backend Tests (XUnit)**: 17 Passed / 0 Failed
-- **Frontend Tests (Vitest/Manual)**: 12 Validated / 0 Failed
+- **Frontend Tests (Vitest/Manual/RTL)**: 22 Validated / 0 Failed
 - **Overall Quality**: **Certified Production Ready**
 
 > [!TIP]

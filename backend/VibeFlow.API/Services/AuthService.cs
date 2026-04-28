@@ -13,6 +13,7 @@ public interface IAuthService
 {
     Task<User> RegisterAsync(string email, string password, string name);
     Task<string?> LoginAsync(string email, string password);
+    string GenerateJwtToken(User user);
 }
 
 public class AuthService : IAuthService
@@ -57,7 +58,7 @@ public class AuthService : IAuthService
         return GenerateJwtToken(user);
     }
 
-    private string GenerateJwtToken(User user)
+    public string GenerateJwtToken(User user)
     {
         var jwtSettings = _configuration.GetSection("Jwt");
         var key = Encoding.ASCII.GetBytes(jwtSettings["Key"] ?? "VERY_LONG_AND_SECURE_SECRET_KEY_FOR_JWT");

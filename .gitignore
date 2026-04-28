@@ -1,0 +1,58 @@
+# =========================
+# VibeFlow - GitIgnore
+# =========================
+
+# -----------------
+# 1. Project Specific
+# -----------------
+# Massive Standalone DB engine & installer (Never commit these)
+pgsql/
+pg.zip
+pdf_report.txt
+akashkendre_report.pdf
+VibeFlow_tests.docx
+
+# -----------------
+# 2. Node & Frontend (React/Vite)
+# -----------------
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/coverage/
+
+# -----------------
+# 3. .NET Backend (C# / Visual Studio)
+# -----------------
+# Build output folders
+**/bin/
+**/obj/
+
+# Visual Studio / Rider Configs
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.idea/
+*.DotSettings.user
+
+# -----------------
+# 4. OS / Environment
+# -----------------
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Mac / Windows Cache
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log

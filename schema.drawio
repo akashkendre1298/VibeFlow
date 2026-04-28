@@ -1,0 +1,34 @@
+<mxfile host="65bd71144e">
+    <diagram id="vibeflow_erd" name="Database Schema (ERD)">
+        <mxGraphModel dx="1423" dy="1523" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="tbl_users" value="&lt;b&gt;Users&lt;/b&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;b&gt;PK&lt;/b&gt; Id (int)&lt;br&gt;Name (string)&lt;br&gt;Email (string)&lt;br&gt;PasswordHash (string)&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#000000;fontSize=14;spacing=10;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="100" width="220" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="tbl_tasks" value="&lt;b&gt;TaskItems&lt;/b&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;b&gt;PK&lt;/b&gt; Id (int)&lt;br&gt;Title (string)&lt;br&gt;Description (string)&lt;br&gt;Status (int/Enum)&lt;br&gt;Priority (int/Enum)&lt;br&gt;DueDate (DateTime?)&lt;br&gt;&lt;b&gt;FK&lt;/b&gt; AssigneeId (User)&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#000000;fontSize=14;spacing=10;" parent="1" vertex="1">
+                    <mxGeometry x="540" y="100" width="220" height="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="tbl_worklogs" value="&lt;b&gt;WorkLogs&lt;/b&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;b&gt;PK&lt;/b&gt; Id (int)&lt;br&gt;&lt;b&gt;FK&lt;/b&gt; TaskItemId (TaskItems)&lt;br&gt;&lt;b&gt;FK&lt;/b&gt; UserId (Users)&lt;br&gt;Hours (decimal)&lt;br&gt;Description (string)&lt;br&gt;LoggedAt (DateTime)&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#000000;fontSize=14;spacing=10;" parent="1" vertex="1">
+                    <mxGeometry x="540" y="440" width="220" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="tbl_history" value="&lt;b&gt;AssignmentHistory&lt;/b&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;b&gt;PK&lt;/b&gt; Id (int)&lt;br&gt;&lt;b&gt;FK&lt;/b&gt; TaskItemId (TaskItems)&lt;br&gt;ChangeDescription (string)&lt;br&gt;ChangedAt (DateTime)&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#000000;fontSize=14;spacing=10;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="440" width="220" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel_user_task" value="1 : N&#10;(Assigned To)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.25;strokeColor=#000000;fontColor=#FFFFFF;fontSize=12;strokeWidth=2;endArrow=block;endFill=0;" parent="1" source="tbl_users" target="tbl_tasks" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel_user_worklog" value="1 : N&#10;(Logged By)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.75;entryX=0;entryY=0.75;strokeColor=#000000;fontColor=#FFFFFF;fontSize=12;strokeWidth=2;endArrow=block;endFill=0;" parent="1" source="tbl_users" target="tbl_worklogs" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel_task_worklog" value="1 : N&#10;(Logs Context)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;fontColor=#FFFFFF;fontSize=12;strokeWidth=2;endArrow=block;endFill=0;" parent="1" source="tbl_tasks" target="tbl_worklogs" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel_task_history" value="1 : N&#10;(History Logs)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.25;exitY=1;entryX=0.5;entryY=0;strokeColor=#000000;fontColor=#FFFFFF;fontSize=12;strokeWidth=2;endArrow=block;endFill=0;" parent="1" source="tbl_tasks" target="tbl_history" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
